@@ -1,5 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 using SmartCertify.Infrastructure;
 
 namespace SmartCertify.API
@@ -28,6 +29,12 @@ namespace SmartCertify.API
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
+                app.MapScalarApiReference(options =>
+                {
+                    options.WithTitle("My API");
+                    options.WithTheme(ScalarTheme.BluePlanet);
+                    options.WithSidebar(false);
+                });
             }
 
             app.UseHttpsRedirection();
