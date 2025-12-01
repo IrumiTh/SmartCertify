@@ -33,7 +33,12 @@ namespace SmartCertify.API
                 {
                     options.WithTitle("My API");
                     options.WithTheme(ScalarTheme.BluePlanet);
-                    options.WithSidebar(false);
+                    options.WithSidebar(true);
+                });
+
+                app.UseSwaggerUi(options =>
+                {
+                    options.DocumentPath = "openapi/v1.json";
                 });
             }
 
