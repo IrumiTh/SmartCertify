@@ -9,8 +9,8 @@ namespace SmartCertify.Application.Interfaces.Courses
 {
     public interface ICourseRepository
     {
-        IEnumerable<Course> GetAllCourses();
+      
 
-        Task<IEnumerable<Course>> GetAllCoursesAsync();
+        Task<List<Course>> GetAllCoursesAsync();
     }
 }
