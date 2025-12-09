@@ -17,15 +17,13 @@ namespace SmartCertify.Infrastructure
         {
             this._dbContext = dbContext;
         }
-        public IEnumerable<Course> GetAllCourses()
+    
+        public  Task<List<Course>> GetAllCoursesAsync()
         {
-            var data = _dbContext.Courses.ToList();
-            return data;
-        }
-
-        public async Task<IEnumerable<Course>> GetAllCoursesAsync()
-        {
-            return await _dbContext.Courses.ToListAsync();
+            return  _dbContext.Courses.ToListAsync();
         }
     }
 }
+
+
+ 
