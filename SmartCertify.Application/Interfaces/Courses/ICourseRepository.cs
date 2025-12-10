@@ -12,5 +12,17 @@ namespace SmartCertify.Application.Interfaces.Courses
       
 
         Task<List<Course>> GetAllCoursesAsync();
+
+        Task<Course?> GetCourseByIdAsync(int courseId);
+
+        Task<bool> IsTitleDuplicateAsync(string title);
+
+        Task AddCourseAsync(Course course);
+
+        Task UpdateCourseAsync(Course course);
+
+        Task DeleteCourseAsync(Course course);
+
+        Task UpdateDescriptionAsync(int courseId, string Description);
     }
 }
