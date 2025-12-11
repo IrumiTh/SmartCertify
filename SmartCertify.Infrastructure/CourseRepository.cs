@@ -59,6 +59,7 @@ namespace SmartCertify.Infrastructure
             course.Description = Description;
             await _dbContext.SaveChangesAsync();
         }
+
     }
 }
 
