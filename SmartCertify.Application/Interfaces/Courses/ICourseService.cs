@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using SmartCertify.Application.DTOs;
+
+namespace SmartCertify.Application.Interfaces.Courses
+{
+    public interface ICourseService
+    {
+        Task<IEnumerable<CourseDto>> GetAllCoursesAsync();
+
+        Task<CourseDto?> GetCourseByIdAsync(int courseId);
+
+        Task<CourseDto> AddCourseAsync(CreateCourseDto createCourseDto);
+
+        Task<bool> IsTitleDuplicateAsync(string title);
+
+        Task UpdateCourseAsync(int courseId, UpdateCourseDto updateCourseDto);
+
+        Task DeleteCourseAsync(int courseId);
+
+        Task UpdateDescriptionAsync(int courseId, CourseUploadDescriptionDto descriptionDto);
+    }
+}

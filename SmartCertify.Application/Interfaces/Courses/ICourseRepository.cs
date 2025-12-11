@@ -11,7 +11,7 @@ namespace SmartCertify.Application.Interfaces.Courses
     {
       
 
-        Task<List<Course>> GetAllCoursesAsync();
+        Task<IEnumerable<Course>> GetAllCoursesAsync();
 
         Task<Course?> GetCourseByIdAsync(int courseId);
 
