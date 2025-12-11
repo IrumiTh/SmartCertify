@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using SmartCertify.Application.DTOs;
 using SmartCertify.Application.Interfaces.Courses;
+using SmartCertify.Domain.Entities;
 
 namespace SmartCertify.Application.Services
 {
@@ -19,14 +20,21 @@ namespace SmartCertify.Application.Services
             this._courseRepository = courseRepository;
             this._mapper = mapper;
         }
-        public Task<CourseDto> AddCourseAsync(CreateCourseDto createCourseDto)
+        public async Task AddCourseAsync(CreateCourseDto createCourseDto)
         {
-            throw new NotImplementedException();
+            var course = _mapper.Map<Course>(createCourseDto);
+            course.CreatedBy = 1;
+            course.CreatedOn = DateTime.UtcNow;
+
+            await _courseRepository.AddCourseAsync(course);
         }
 
-        public Task DeleteCourseAsync(int courseId)
+        public async Task DeleteCourseAsync(int courseId)
         {
-            throw new NotImplementedException();
+            var course = await _courseRepository.GetCourseByIdAsync(courseId);
+            if (course == null) throw new KeyNotFoundException("Course not found");
+
+            await _courseRepository.DeleteCourseAsync(course);
         }
 
         public async Task<IEnumerable<CourseDto>> GetAllCoursesAsync()
@@ -36,24 +44,29 @@ namespace SmartCertify.Application.Services
             
         }
 
-        public Task<CourseDto?> GetCourseByIdAsync(int courseId)
+        public async Task<CourseDto?> GetCourseByIdAsync(int courseId)
         {
-            throw new NotImplementedException();
+            var course = await _courseRepository.GetCourseByIdAsync(courseId);
+            return course == null ? null : _mapper.Map<CourseDto>(course);
         }
 
-        public Task<bool> IsTitleDuplicateAsync(string title)
+        public async Task<bool> IsTitleDuplicateAsync(string title)
         {
-            throw new NotImplementedException();
+            return await _courseRepository.IsTitleDuplicateAsync(title);
         }
 
-        public Task UpdateCourseAsync(int courseId, UpdateCourseDto updateCourseDto)
+        public async Task UpdateCourseAsync(int courseId, UpdateCourseDto updateCourseDto)
         {
-            throw new NotImplementedException();
+            var course = await _courseRepository.GetCourseByIdAsync(courseId);
+            if (course == null) throw new KeyNotFoundException("Course not found");
+
+            _mapper.Map(updateCourseDto, course);
+            await _courseRepository.UpdateCourseAsync(course);
         }
 
-        public Task UpdateDescriptionAsync(int courseId, CourseUploadDescriptionDto descriptionDto)
+        public async Task UpdateDescriptionAsync(int courseId, string description)
         {
-            throw new NotImplementedException();
+            await _courseRepository.UpdateDescriptionAsync(courseId, description);
         }
     }
 }

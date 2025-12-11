@@ -13,7 +13,7 @@ namespace SmartCertify.Application.Interfaces.Courses
 
         Task<CourseDto?> GetCourseByIdAsync(int courseId);
 
-        Task<CourseDto> AddCourseAsync(CreateCourseDto createCourseDto);
+        Task AddCourseAsync(CreateCourseDto createCourseDto);
 
         Task<bool> IsTitleDuplicateAsync(string title);
 
@@ -21,6 +21,6 @@ namespace SmartCertify.Application.Interfaces.Courses
 
         Task DeleteCourseAsync(int courseId);
 
-        Task UpdateDescriptionAsync(int courseId, CourseUploadDescriptionDto descriptionDto);
+        Task UpdateDescriptionAsync(int courseId, string descriptionDto);
     }
 }
