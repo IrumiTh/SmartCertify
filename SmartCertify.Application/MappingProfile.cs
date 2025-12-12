@@ -14,6 +14,8 @@ namespace SmartCertify.Application
         public MappingProfile()
         {
             CreateMap<Course, CourseDto>().ReverseMap();
+            CreateMap<CreateCourseDto, Course>();
+            CreateMap<UpdateCourseDto, Course>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }
 }
