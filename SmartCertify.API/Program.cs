@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using SmartCertify.Application;
+using SmartCertify.Application.Interfaces.Courses;
+using SmartCertify.Application.Services;
 using SmartCertify.Infrastructure;
 
 namespace SmartCertify.API
@@ -25,7 +27,22 @@ namespace SmartCertify.API
             builder.Services.AddOpenApi();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<ICourseService, CourseService>();
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("default", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
+
             var app = builder.Build();
+
+            app.UseCors("default");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
