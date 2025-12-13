@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using SmartCertify.API.Filters;
 using SmartCertify.Application;
 using SmartCertify.Application.Interfaces.Courses;
 using SmartCertify.Application.Services;
@@ -22,7 +23,14 @@ namespace SmartCertify.API
             });
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(options =>
+            {
+                options.Filters.Add<ValidationFilter>();// add your custom filters
+            }).ConfigureApiBehaviorOptions(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true; // disable automate validation
+            }
+            );
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
