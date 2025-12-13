@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartCertify.Application.DTOs;
 using SmartCertify.Application.Interfaces.Courses;
@@ -10,10 +11,14 @@ namespace SmartCertify.API.Controllers
     public class CourseController : ControllerBase
     {
         private readonly ICourseService _service;
+        private readonly IValidator<CreateCourseDto> _validator;
+        private readonly IValidator<UpdateCourseDto> _updateValidator;
 
-        public CourseController(ICourseService service)
+        public CourseController(ICourseService service, IValidator<CreateCourseDto> validator, IValidator<UpdateCourseDto> updateValidator)
         {
+            this._validator = validator;
             this._service = service;
+            this._updateValidator = updateValidator;
         }
 
         [HttpGet]
@@ -46,6 +51,11 @@ namespace SmartCertify.API.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> CreateCourse([FromBody] CreateCourseDto createCourseDto)
         {
+            var validationResult = await _validator.ValidateAsync(createCourseDto);
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
             await _service.AddCourseAsync(createCourseDto);
             return CreatedAtAction(nameof(GetCourse), new { id = createCourseDto.Title }, createCourseDto);
         }
@@ -59,6 +69,11 @@ namespace SmartCertify.API.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> UpdateCourse(int id, [FromBody] UpdateCourseDto updateCourseDto)
         {
+            var validationResult = await _updateValidator.ValidateAsync(updateCourseDto);
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
             await _service.UpdateCourseAsync(id, updateCourseDto);
             return NoContent();
         }
