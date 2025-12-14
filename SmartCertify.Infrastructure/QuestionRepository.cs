@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SmartCertify.Application.Interfaces.Questions;
 using SmartCertify.Domain.Entities;
 
 namespace SmartCertify.Infrastructure
 {
-    internal class QuestionRepository
+    internal class QuestionRepository : IQuestionRepository
     {
         private readonly SmartCertifyContext _dbContext;
 
@@ -23,7 +24,7 @@ namespace SmartCertify.Infrastructure
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Question>> GetAllQuestionsAsync()
+        public async Task<IEnumerable<Question>> GetAllQuestionAsync()
         {
             return await _dbContext.Questions.ToListAsync();
         }
@@ -38,5 +39,6 @@ namespace SmartCertify.Infrastructure
             _dbContext.Questions.Update(question);
             await _dbContext.SaveChangesAsync();
         }
+
     }
 }
