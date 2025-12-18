@@ -7,7 +7,7 @@ namespace SmartCertify.API.Controllers
     [ApiController]
     public class QuestionsController : ControllerBase
     {
-        public QuestionsController()
+        public QuestionsController(IQuestionSe)
         {
             
         }
