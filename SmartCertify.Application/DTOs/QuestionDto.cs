@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SmartCertify.Application.DTOs
 {
-    internal class QuestionDto
+    public class QuestionDto
     {
         public int QuestionId { get; set; }
         public int CourseId { get; set; }
