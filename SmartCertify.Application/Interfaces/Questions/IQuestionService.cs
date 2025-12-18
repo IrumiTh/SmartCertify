@@ -7,20 +7,14 @@ using SmartCertify.Application.DTOs;
 
 namespace SmartCertify.Application.Interfaces.Questions
 {
-    internal interface IQuestionService
+    public interface IQuestionService
     {
-        Task<IEnumerable<QuestionDto>> GetAllQuestionAsync();
-
-        Task<QuestionDto?> GetQuestionByIdAsync(int courseId);
-
-        Task AddCourseAsync(CreateCourseDto createCourseDto);
-
-        Task<bool> IsTitleDuplicateAsync(string title);
-
-        Task UpdateCourseAsync(int courseId, UpdateCourseDto updateCourseDto);
-
-        Task DeleteCourseAsync(int courseId);
-
-        Task UpdateDescriptionAsync(int courseId, string descriptionDto);
+        Task<IEnumerable<QuestionDto>> GetAllQuestionsAsync();
+        Task<QuestionDto?> GetQuestionByIdAsync(int id);
+        Task AddQuestionAsync(CreateQuestionDto dto);
+        Task UpdateQuestionAsync(int id, UpdateQuestionDto dto);
+        Task DeleteQuestionAsync(int id);
+        Task<QuestionDto> AddQuestionAndChoicesAsync(QuestionDto dto);
+        Task UpdateQuestionAndChoicesAsync(int id, QuestionDto dto);
     }
 }
