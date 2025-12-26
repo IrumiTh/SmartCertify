@@ -10,7 +10,7 @@ namespace SmartCertify.Application.Interfaces.QuestionChoice
     public interface IChoiceService
     {
         Task<IEnumerable<ChoiceDto>> GetAllChoicesAsync(int questionId);
-        Task<ChoiceDto> GetChoiceByIdAsync(int choiceId);
+        Task<ChoiceDto?> GetChoiceByIdAsync(int choiceId);
         Task AddChoiceAsync(CreateChoiceDto dto);
         Task UpdateChoiceAsync(int choiceId, UpdateChoiceDto dto);
         Task UpdateUserChoiceAsync(int choiceId, UpdateUserChoice dto);
