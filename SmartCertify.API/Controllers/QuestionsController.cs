@@ -15,6 +15,10 @@ namespace SmartCertify.API.Controllers
             _service = servive;
         }
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<QuestionDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<QuestionDto>>> GetAllQuestions()
         {
             var questions = await _service.GetAllQuestionsAsync();
@@ -22,6 +26,11 @@ namespace SmartCertify.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(QuestionDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<QuestionDto>> GetQuestion(int id)
         {
             var question = await _service.GetQuestionByIdAsync(id);
@@ -33,6 +42,10 @@ namespace SmartCertify.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(CreateQuestionDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> CreateQuestion([FromBody] CreateQuestionDto dto)
         {
             await _service.AddQuestionAsync(dto);
@@ -40,6 +53,11 @@ namespace SmartCertify.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+
         public async Task<IActionResult> UpdateQuestion(int id, [FromBody] UpdateQuestionDto dto)
         {
             await _service.UpdateQuestionAsync(id, dto);
@@ -47,6 +65,11 @@ namespace SmartCertify.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> DeleteQuestion(int id)
         {
             await _service.DeleteQuestionAsync(id);
