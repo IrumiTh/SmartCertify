@@ -6,6 +6,8 @@ using SmartCertify.API.Filters;
 using SmartCertify.Application;
 using SmartCertify.Application.DTOvalidations;
 using SmartCertify.Application.Interfaces.Courses;
+using SmartCertify.Application.Interfaces.QuestionChoice;
+using SmartCertify.Application.Interfaces.Questions;
 using SmartCertify.Application.Services;
 using SmartCertify.Infrastructure;
 
@@ -40,6 +42,12 @@ namespace SmartCertify.API
             builder.Services.AddValidatorsFromAssemblyContaining<CreateCourseValidator>();
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddScoped<ICourseService, CourseService>();
+
+            // Register Question and Choice services and repositories
+            builder.Services.AddScoped<IQuestionService, QuestionService>();
+            builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+            builder.Services.AddScoped<IChoiceService, ChoiceService>();
+            builder.Services.AddScoped<IChoiceRepository, ChoiceRepository>();
 
             builder.Services.AddCors(options =>
             {
