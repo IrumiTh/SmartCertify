@@ -16,6 +16,18 @@ namespace SmartCertify.Application
             CreateMap<Course, CourseDto>().ReverseMap();
             CreateMap<CreateCourseDto, Course>();
             CreateMap<UpdateCourseDto, Course>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+
+            CreateMap<Question, QuestionDto>().ReverseMap();
+
+            // CreateQuestionDto -> Question
+            CreateMap<CreateQuestionDto, Question>();
+
+            // UpdateQuestionDto -> Question
+            CreateMap<UpdateQuestionDto, Question>();
+
+            // Choice <-> ChoiceDto
+            CreateMap<Choice, ChoiceDto>().ReverseMap();
         }
     }
 }
