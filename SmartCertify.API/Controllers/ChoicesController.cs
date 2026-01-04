@@ -85,5 +85,36 @@ namespace SmartCertify.API.Controllers
             await _service.DeleteChoiceAsync(id);
             return NoContent();
         }
+
+
+        [HttpPost("bulk")]
+        [ProducesResponseType(typeof(IEnumerable<ChoiceDto>), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> BulkCreateChoices([FromBody] BulkCreateChoiceDto dto)
+        {
+            // Optional: Check if the question exists (implement this in your service/repository)
+            // var questionExists = await _questionService.QuestionExistsAsync(dto.QuestionId);
+            // if (!questionExists)
+            //     return NotFound($"QuestionId {dto.QuestionId} not found.");
+
+            var createdChoices = new List<ChoiceDto>();
+            foreach (var choice in dto.Choices)
+            {
+                choice.QuestionId = dto.QuestionId; // Ensure all choices are linked to the same question
+                await _service.AddChoiceAsync(choice);
+                // Optionally, fetch the created choice and add to createdChoices
+                // var created = await _service.GetChoiceByIdAsync(choice.ChoiceId);
+                // if (created != null) createdChoices.Add(created);
+            }
+
+            return CreatedAtAction(nameof(GetChoices), new { questionId = dto.QuestionId }, null);
+        }
+
+
+
+
+
     }
 }
