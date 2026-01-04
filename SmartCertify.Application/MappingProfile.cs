@@ -28,6 +28,11 @@ namespace SmartCertify.Application
 
             // Choice <-> ChoiceDto
             CreateMap<Choice, ChoiceDto>().ReverseMap();
+            // CreateChoiceDto -> Choice
+            CreateMap<CreateChoiceDto, Choice>();
+
+            // UpdateChoiceDto -> Choice
+            CreateMap<UpdateChoiceDto, Choice>();
         }
     }
 }
