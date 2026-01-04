@@ -49,13 +49,22 @@ namespace SmartCertify.API
             builder.Services.AddScoped<IChoiceService, ChoiceService>();
             builder.Services.AddScoped<IChoiceRepository, ChoiceRepository>();
 
+            //builder.Services.AddCors(options =>
+            //{
+            //    options.AddPolicy("default", policy =>
+            //    {
+            //        policy.AllowAnyOrigin()
+            //        .AllowAnyHeader()
+            //        .AllowAnyMethod();
+            //    });
+            //});
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("default", policy =>
+                options.AddPolicy("AllowAll", policy =>
                 {
                     policy.AllowAnyOrigin()
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
                 });
             });
 
