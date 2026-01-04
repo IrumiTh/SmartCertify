@@ -44,4 +44,14 @@ namespace SmartCertify.Application.DTOs
         public int ChoiceId { get; set; }
         public bool IsCorrect { get; set; }
     }
+
+    public class BulkCreateChoiceDto
+    {
+        [Required]
+        public int QuestionId { get; set; }
+
+        [Required]
+        [MinLength(1, ErrorMessage = "At least one choice is required.")]
+        public List<CreateChoiceDto> Choices { get; set; } = new();
+    }
 }
