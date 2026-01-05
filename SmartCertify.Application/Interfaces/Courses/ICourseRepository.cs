@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SmartCertify.Domain.Entities;
 
 namespace SmartCertify.Application.Interfaces.Courses
@@ -24,5 +25,8 @@ namespace SmartCertify.Application.Interfaces.Courses
         Task DeleteCourseAsync(Course course);
 
         Task UpdateDescriptionAsync(int courseId, string Description);
+
+        Task<bool> ExistsAsync(int courseId);
+        
     }
 }
