@@ -60,6 +60,10 @@ namespace SmartCertify.Infrastructure
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task<bool> ExistsAsync(int courseId)
+        {
+            return await _dbContext.Courses.AnyAsync(c => c.CourseId == courseId);
+        }
     }
 }
 
