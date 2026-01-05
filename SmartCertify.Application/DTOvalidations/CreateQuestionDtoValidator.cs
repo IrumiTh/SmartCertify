@@ -29,7 +29,9 @@ namespace SmartCertify.Application.DTOvalidations
 
             RuleFor(q => q.CourseId)
                 .GreaterThan(0)
-                .WithMessage("CourseId must be greater than 0.");
+                .MustAsync(async (courseId, cancellation) =>
+                await ICourseRepository.ExistsAsync(courseId))
+                .WithMessage("CourseId does not exist.");
         }
     }
 
