@@ -60,17 +60,18 @@ namespace SmartCertify.API
             //});
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll", policy =>
+                options.AddPolicy("FrontendAllow", policy =>
                 {
-                    policy.AllowAnyOrigin()
+                    policy.WithOrigins("http://localhost:4200")
                           .AllowAnyHeader()
                           .AllowAnyMethod();
+                          
                 });
             });
 
             var app = builder.Build();
 
-            app.UseCors("default");
+            //app.UseCors("FrontendAllow");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -91,10 +92,18 @@ namespace SmartCertify.API
 
             app.UseHttpsRedirection();
 
+            app.UseRouting();
+
+            app.UseCors("FrontendAllow");
+
             app.UseAuthorization();
 
-
             app.MapControllers();
+
+            //app.UseAuthorization();
+
+
+            //app.MapControllers();
 
             app.Run();
 
