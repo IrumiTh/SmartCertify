@@ -13,8 +13,11 @@ namespace SmartCertify.Application.DTOvalidations
 {
     public class QuestionValidator : AbstractValidator<CreateQuestionDto>
     {
-        public QuestionValidator()
+        private readonly ICourseRepository _courseRepository;
+        public QuestionValidator(ICourseRepository courseRepository)
         {
+            _courseRepository = courseRepository;
+
             RuleFor(q => q.QuestionText)
                 .NotEmpty()
                 .WithMessage("Question text is required.")
@@ -30,7 +33,7 @@ namespace SmartCertify.Application.DTOvalidations
             RuleFor(q => q.CourseId)
                 .GreaterThan(0)
                 .MustAsync(async (courseId, cancellation) =>
-                await ICourseRepository.ExistsAsync(courseId))
+                await _courseRepository.ExistsAsync(courseId))
                 .WithMessage("CourseId does not exist.");
         }
     }
